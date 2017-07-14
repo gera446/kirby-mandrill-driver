@@ -18,17 +18,26 @@ email::$services['mandrill'] = function ($email) {
         'text'       => $email->body,
         'headers'    => array(
             'Reply-To' => $email->replyTo,
-        ),
-    );
+            ),
+        );
 
-    $data = array(
-        'key'     => $email->options['key'],
-        'message' => $message,
-    );
+    if (empty($email->options['template'])) {
+        $data = array(
+            'key'     => $email->options['key'],
+            'message' => $message,
+        );
+    }else{
+        $data = array(
+            'key'     => $email->options['key'],
+            'template_name' => $email->options['template'],
+            'message' => $message,
+        );
+    }
+    
 
     $email->response = remote::post($url, array(
         'data' => json_encode($data),
-    ));
+        ));
 
     if ($email->response->code() != 200) {
         throw new Error('The mail could not be sent!');
