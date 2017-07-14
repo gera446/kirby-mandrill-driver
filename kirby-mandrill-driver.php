@@ -9,6 +9,10 @@ email::$services['mandrill'] = function ($email) {
     }
 
     $url = 'https://mandrillapp.com/api/1.0/messages/send.json';
+    
+    if (!empty($email->options['template'])) {
+        $url = 'https://mandrillapp.com/api/1.0/messages/send-template.json';
+    }
 
     // See https://mandrillapp.com/api/docs/messages.curl.html
     $message = array(
@@ -21,18 +25,12 @@ email::$services['mandrill'] = function ($email) {
             ),
         );
 
-    if (empty($email->options['template'])) {
-        $data = array(
-            'key'     => $email->options['key'],
-            'message' => $message,
-        );
-    }else{
-        $data = array(
-            'key'     => $email->options['key'],
-            'template_name' => $email->options['template'],
-            'message' => $message,
-        );
-    }
+    
+    $data = array(
+        'key'     => $email->options['key'],
+        'template_name' => $email->options['template'],
+        'message' => $message,
+    );
     
 
     $email->response = remote::post($url, array(
