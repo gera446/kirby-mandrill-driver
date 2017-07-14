@@ -9,7 +9,7 @@ email::$services['mandrill'] = function ($email) {
     }
 
     $url = 'https://mandrillapp.com/api/1.0/messages/send.json';
-    
+
     if (!empty($email->options['template'])) {
         $url = 'https://mandrillapp.com/api/1.0/messages/send-template.json';
     }
@@ -29,6 +29,7 @@ email::$services['mandrill'] = function ($email) {
     $data = array(
         'key'     => $email->options['key'],
         'template_name' => $email->options['template'],
+        'template_content' => $email->options['template_content']
         'message' => $message,
     );
     
