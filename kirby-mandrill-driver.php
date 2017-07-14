@@ -29,7 +29,7 @@ email::$services['mandrill'] = function ($email) {
     $data = array(
         'key'     => $email->options['key'],
         'template_name' => $email->options['template'],
-        'template_content' => $email->options['template_content']
+        'template_content' => $email->options['template_content'],
         'message' => $message,
     );
     
