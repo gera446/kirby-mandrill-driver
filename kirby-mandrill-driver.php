@@ -20,6 +20,7 @@ email::$services['mandrill'] = function ($email) {
         'to'         => is_array($email->to) ? $email->to : array(array('email' => $email->to)),
         'subject'    => $email->subject,
         'text'       => $email->body,
+        'merge_vars' => $email->options['merge_vars'],
         'headers'    => array(
             'Reply-To' => $email->replyTo,
             ),
